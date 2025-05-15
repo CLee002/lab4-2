@@ -15,9 +15,9 @@ def generate_test_data(num_contacts):
         phone = f'123-456-789{i}'
         t = i + 1
         address = f'({1000/t} Zachary Drive{i})'
-        db.execute('INSERT INTO contacts (name, phone, address) VALUES (?, ?, ?)', (name, phone, address))
+        db.execute('INSERT INTO contact (name, phone, address) VALUES (?, ?, ?)', (name, phone, address))
     db.commit()
-    print(f'{num_contacts} test contacts added to the database.')
+    print(f'{num_contacts} test contact added to the database.')
     db.close()
 
 if __name__ == '__main__':

@@ -16,7 +16,7 @@ def init_db():
     with app.app_context():
         db = get_db()
         db.execute('''
-            CREATE TABLE IF NOT EXISTS contacts (
+            CREATE TABLE IF NOT EXISTS contact (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL,
                 phone TEXT NOT NULL,
@@ -33,7 +33,7 @@ def index():
         if request.form.get('action') == 'delete':
             contact_id = request.form.get('contact_id')
             db = get_db()
-            db.execute('DELETE FROM contacts WHERE id = ?', (contact_id,))
+            db.execute('DELETE FROM contact WHERE id = ?', (contact_id,))
             db.commit()
             message = 'Contact deleted successfully.'
         else:
@@ -42,7 +42,7 @@ def index():
             address = request.form.get('address')
             if name and phone and address:
                 db = get_db()
-                db.execute('INSERT INTO contacts (name, phone, address) VALUES (?, ?, ?)', (name, phone, address))
+                db.execute('INSERT INTO contact (name, phone, address) VALUES (?, ?, ?)', (name, phone, address))
                 db.commit()
                 message = 'Contact added successfully.'
             else:
@@ -50,7 +50,7 @@ def index():
 
     # Always display the contacts table
     db = get_db()
-    contacts = db.execute('SELECT * FROM contacts').fetchall()
+    contacts = db.execute('SELECT * FROM contact').fetchall()
 
     # Display the HTML form along with the contacts table
     return render_template_string('''
@@ -71,7 +71,7 @@ def index():
                 <input type="submit" value="Submit">
             </form>
             <p>{{ message }}</p>
-            {% if contacts %}
+            {% if contact %}
                 <table border="1">
                     <tr>
                         <th>Name</th>
@@ -79,7 +79,7 @@ def index():
                         <th?Address</th>
                         <th>Delete</th>
                     </tr>
-                    {% for contact in contacts %}
+                    {% for contact in contact %}
                         <tr>
                             <td>{{ contact['name'] }}</td>
                             <td>{{ contact['phone'] }}</td>
@@ -95,7 +95,7 @@ def index():
                     {% endfor %}
                 </table>
             {% else %}
-                <p>No contacts found.</p>
+                <p>No contact found.</p>
             {% endif %}
         </body>
         </html>
