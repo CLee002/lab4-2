@@ -1,4 +1,5 @@
 import sqlite3
+from random_address import real_random_address
 import os
 
 DATABASE = '/nfs/demo.db'
@@ -13,7 +14,9 @@ def generate_test_data(num_contacts):
     for i in range(num_contacts):
         name = f'Test Name {i}'
         phone = f'123-456-789{i}'
-        db.execute('INSERT INTO contacts (name, phone) VALUES (?, ?)', (name, phone))
+        t = real_random_address()
+        address = f'({t}{i})'
+        db.execute('INSERT INTO contacts (name, phone, address) VALUES (?, ?, ?)', (name, phone, address))
     db.commit()
     print(f'{num_contacts} test contacts added to the database.')
     db.close()
