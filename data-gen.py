@@ -13,7 +13,7 @@ def generate_test_data(num_contacts):
     for i in range(num_contacts):
         name = f'Test Name {i}'
         phone = f'123-456-789{i}'
-        address = f'({1000/i} Zachary Drive{i})'
+        address = f'({1000/i+1} Zachary Drive{i})'
         db.execute('INSERT INTO contacts (name, phone, address) VALUES (?, ?, ?)', (name, phone, address))
     db.commit()
     print(f'{num_contacts} test contacts added to the database.')
